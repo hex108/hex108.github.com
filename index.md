@@ -1,6 +1,6 @@
 ---
 layout: index 
-title: hex108- Searching...
+title: hex108
 ---
 
 {% for post in site.posts %}
