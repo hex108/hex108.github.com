@@ -52,7 +52,7 @@ Cannot access memory at address 0x0
     A ----- a (int, offset: 0)
 
 ### GDB怎么访问虚基类成员`a`
-`p &(((B \*)0)->a)`在GDB中经历了如下几步:
+`p &(((B *)0)->a)`在GDB中经历了如下几步：
 
 1.查找自己的成员变量
 
