@@ -1,7 +1,7 @@
 ---
 layout: post
 title: GDB如何获取虚基类中成员变量的偏移
-category: C++ 
+category: GDB 
 summary: GDB可以通过一个真正的类实例才能获取虚基类中成员变量的偏移，但是通过NULL Pointer是不行的。
 tags: [C++, virtual class, GDB]
 ---
