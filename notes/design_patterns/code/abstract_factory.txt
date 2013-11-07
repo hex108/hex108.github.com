@@ -1,0 +1,41 @@
+class AbstractFactory{
+public:
+    virtual product1 create_product1();
+    virtual product2 create_product2();
+    virtual product3 create_product3();
+    ...
+};
+
+class ConcreteFactory1: public AbstractFactory{
+public:
+    product1 create_product1(){
+        ...
+    }
+
+    product2 create_product2(){
+        ...
+    }
+
+    product3 create_product3(){
+        ...
+    }
+
+    ...
+};
+
+class ConcreteFactory2: public AbstractFactory{
+public:
+    product1 create_product1(){
+        ...
+    }
+
+    product2 create_product2(){
+        ...
+    }
+
+    product3 create_product3(){
+        ...
+    }
+
+    ...
+};

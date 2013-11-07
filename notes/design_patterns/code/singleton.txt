@@ -1,0 +1,14 @@
+class Sigleton{
+public:
+    static Sigleton &get_instance(){
+        static Sigleton unique_instance;
+
+        return unique_instance;
+    };
+
+private:
+    Sigleton();
+    Sigleton(const Sigleton &);
+    Sigleton &operator=(const Sigleton &);
+    ~Sigleton();
+};

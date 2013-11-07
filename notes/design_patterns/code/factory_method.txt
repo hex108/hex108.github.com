@@ -1,0 +1,20 @@
+class Factory{
+public:
+    virtual product create_product();
+    //other methods
+    ...
+};
+
+class ConcretFactory1: public Factory{
+public:
+    product create_product(){
+        ...
+    }
+};
+
+class ConcretFactory2: public Factory{
+public:
+    product create_product(){
+        ...
+    }
+};
