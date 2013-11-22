@@ -1,0 +1,57 @@
+class Component{
+public:
+    virtual string name(){
+        return "I am just a super class.";
+    }
+};
+
+class ConcreteComponet: public Component{
+public:
+    string name(){
+        return "I am a class that will be decorated."; 
+    }
+};
+
+// The following are decorators
+class Decorator: public Component{
+    // do its own things
+    void simle(){
+        cout << "I could simle in addtion to get name." << endl;
+    }
+};
+
+class ConcreteDecoratorA: public Decorator{
+private:
+    Component real_obj;
+
+public:
+    ConcreteDecoratorA(Component &c): real_obj(a) {}
+
+    string name(){
+        string str= "Real name is ConcreteDecoratorA. The following is fake: ";
+        return str + real_obj.name(); 
+    }
+
+    // do other things
+    ...
+};
+
+class ConcreteDecoratorB: public Decorator{
+private:
+    Component real_obj;
+
+public:
+    ConcreteDecoratorA(Component &c): real_obj(a) {}
+
+    string name(){
+        string str= "Real name is ConcreteDecoratorB. The following is fake: ";
+        return str + real_obj.name(); 
+    }
+
+    // do other things
+    ...
+};
+
+// use case
+Component *p = new ConcreteDecoratorB(ConcreteDecoratorA(ConcreteComponet()));
+cout << p.name();
