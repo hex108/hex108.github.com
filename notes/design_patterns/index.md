@@ -69,6 +69,12 @@ title: 设计模式
 
   > button.addActionListener(new Action2()); 
 
+* 命令模式(Command)
+
+  将“请求”封装成对象，以便使用不同的请求、队列或者日志来参数化其他对象。命令模式也支持可撤销的操作。代码片段为[command](code/command.txt)。
+
+  应用：线程池、工作队列。
+
 ## 2. 设计模式里的OO思想
 
   * 类应该对扩展开放，对修改关闭

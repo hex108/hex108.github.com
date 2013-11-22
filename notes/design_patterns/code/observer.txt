@@ -31,7 +31,7 @@ public:
 
 class Observer{
 public:
-    virtual update(Subject *subject){} = 0;
+    virtual update(Subject *subject) = 0;
 };
 
 class Action1: public Observer{
