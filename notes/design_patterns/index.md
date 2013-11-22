@@ -10,7 +10,9 @@ title: 设计模式
 
 ## 1. 常用的设计模式
 
-### 创建型模式
+设计模式可分为三大类：[创建型模式](#CreatinalPattern)，[结构型模式](#StructuralPattern)，[行为型模式](#BehavioralPattern)，详见[Wiki](http://zh.wikipedia.org/zh-cn/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F_%28%E8%AE%A1%E7%AE%97%E6%9C%BA%29)。
+
+<h3 id="CreatinalPattern">创建型模式</h3>
 
 * 单例模式(Singleton)
   
@@ -26,7 +28,7 @@ title: 设计模式
 
   抽象工厂模式提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。代码片段为[abstract_factory](code/abstract_factory.txt)。
   
-### 结构型模式
+<h3 id="StructuralPattern">结构型模式</h3>
 
 * 装饰者模式(Decorator)
 
@@ -48,11 +50,24 @@ title: 设计模式
 
   当初用Java写程序的时候确实是这样！不过今天才搞懂原因。:( 装饰者就是这样的，虽然灵活，会导致设计中出现许多小对象，如果过度使用，会让程序变得很复杂。
 
-### 行为型模式
+<h3 id="BehavioralPattern">行为型模式</h3>
 
 * 策略模式(Strategy)
 
   定义了算法族，分别封装起来，让它们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。代码片段为[strategy](code/strategy.txt)。
+
+* 观察者模式(Observer)
+
+  定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖都会收到通知并自动更新。代码片段为[observer](code/observer.txt)。
+
+  学完这个模式，觉得MVC也了解了！
+
+  下面的代码用设计模式来理解，瞬间觉得高档了很多！
+  > JButton button = new JButton("test");
+
+  > button.addActionListener(new Action1());
+
+  > button.addActionListener(new Action2()); 
 
 ## 2. 设计模式里的OO思想
 
@@ -69,3 +84,5 @@ title: 设计模式
   * 封装变化
 
     例子：策略模式。
+
+  * 松耦合

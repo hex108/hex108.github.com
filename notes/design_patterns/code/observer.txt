@@ -1,0 +1,70 @@
+class Subject{
+private:
+    vector<Observer *> observers;
+
+public:
+    void register_observer(Observer *obs){
+        observers.push_back(obs);
+    }
+
+    void remove_observer(Observer *obs){
+        auto loc = find(observers.begin(), observers.end(), obs); 
+        if(loc != observers.end())
+            observers.erase(loc);
+    }
+
+    void notify_observers(){
+        for(auto obs : observers){
+            // the common interface of observers
+            obs.update(this);
+        }
+    }
+};
+
+// Button will trigger some regitried actions when it is clicked.
+class Button: public Subject{
+public:
+    void clicked(){
+        notify_observers();
+    }
+};
+
+class Observer{
+public:
+    virtual update(Subject *subject){} = 0;
+};
+
+class Action1: public Observer{
+private:
+    Subject *subject;
+
+public:
+    Action1(Subject *s)(){
+        subject = s;
+        subject.register_observer(this);
+    }
+
+    void update(Subject *subject){
+        cout << "I am action 1" << endl;
+    }
+};
+
+class Action2: public Observer{
+private:
+    Subject *subject;
+
+public:
+    Action1(Subject *s)(){
+        subject = s;
+        subject.register_observer(this);
+    }
+
+    void update(Subject *subject){
+        cout << "I am action 2" << endl;
+    }
+};
+
+// use case
+Button b;
+Action1 act1(&b);
+Action2 act2(&b);
