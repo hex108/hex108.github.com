@@ -1,0 +1,46 @@
+// the interface of the Iterator
+class Iterator{
+public:
+    virtual bool has_next() = 0;
+    virtual int next() = 0;
+};
+
+class MyVector{
+private:
+    int *arr;
+    int size;
+
+public:
+    int size(){
+        return size;
+    }
+
+    ...
+};
+
+class MyVectorIterator: public Iterator{
+    Vector *vecotr_ptr; 
+    int postion;
+
+public:
+    MyVectorIterator(MyVectorIterator *p): vecotr_ptr(p), postion(0) {}
+    
+    bool has_next(){
+        return postion < vecotr_ptr->size();
+    }
+
+    int next(){
+        int val = vecotr_ptr[postion];
+        postion ++;
+
+        return val;
+    }
+};
+
+// use case
+MyVector v;
+...
+Iterator *t = new MyVectorIterator(&v);
+while(t.has_next()){
+    cout << t.next() << endl;
+}
