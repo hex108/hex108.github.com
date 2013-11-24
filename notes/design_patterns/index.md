@@ -38,15 +38,15 @@ title: 设计模式
   
   > First open an inputstream of it:
 
-  > FileInputStream fis = new FileInputStream("/objects.gz");
+  >     FileInputStream fis = new FileInputStream("/objects.gz");
 
   > We want speeeed, so let's buffer it in memory:
 
-  > BufferedInputStream bis = new BufferedInputStream(fis);
+  >     BufferedInputStream bis = new BufferedInputStream(fis);
 
   > The file is gzipped, so we need to ungzip it:
 
-  > GzipInputStream gis = new GzipInputStream(bis);
+  >     GzipInputStream gis = new GzipInputStream(bis);
 
   当初用Java写程序的时候确实是这样！不过今天才搞懂原因。:( 装饰者就是这样的，虽然灵活，会导致设计中出现许多小对象，如果过度使用，会让程序变得很复杂。
 
@@ -116,7 +116,7 @@ title: 设计模式
 
   提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。代码片段见[iterator](code/iterator.txt)。
 
-  C++ STL里的iterator是这个模式。
+  C++ STL里的iterator是这个模式，不过有所不同，详情见我的另一篇文章《[迭代器的实现细节](../c++/iterator.html)》。
 
 * 状态模式(State)
   
