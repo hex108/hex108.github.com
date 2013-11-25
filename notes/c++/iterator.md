@@ -23,7 +23,7 @@ public:
 };
 {% endhighlight %}
 
-当知道iterator其实是一个指针以后，下面的代码就比较好理解了。
+当知道iterator其实是一个指针以后，下面的代码就比较好理解了。注：类似下面的代码一般使用`！=`而不是`<`的原因是只有随机存取的顺序容器才支持`<`运行符。
 {% highlight c++ %}
 for(vector<int>::iterator iter = v.begin(); iter != v.end(); iter ++)
 {% endhighlight %}
