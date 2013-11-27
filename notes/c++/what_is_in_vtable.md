@@ -55,7 +55,7 @@ B::_ZTV1B: 4u entries
 12    (int (*)(...))A::bar
 {% endhighlight %}
 
-我们注意到上面的`vtable`里各有4项，最后2项是2个虚函数指针，第一项是**offset to top**，第二项是**typeinfo pointer**，这两项都与[RTTI](http://en.wikipedia.org/wiki/Run-time_type_information)有关，我将在另一篇文章[RTTI的实现细节](rtti.html)里解释这两项的作用。
+我们注意到上面的`vtable`里各有4项，最后2项是2个虚函数指针，第一项是`offset to top`，第二项是`typeinfo pointer`，这两项都与[RTTI](http://en.wikipedia.org/wiki/Run-time_type_information)有关，我将在另一篇文章[RTTI的实现细节](rtti.html)里解释这两项的作用。
 
 ## 2. 多重继承
 类的定义如下所示：
@@ -192,7 +192,7 @@ B::_ZTT1B: 2u entries
    0x80488c2 <B::foo2()+20>: ret  
 {% endhighlight %}
 
-通过[内存布局：虚函数表](data_layout.hmtl)我们了解了`class B`的内存布局如下所示，`sizeof(vptr.B) + sizeof(ib) = 8`，通过上面代码的注释我们就能知道`B::_ZTV1B + 0`处的`8u`是`class B`用来访问其内部的`class A`的，同理我们可知道，`B::_ZTV1B + 24`处的`-0x00000000000000008`是`class A`（特指`class B`内部的`class A`）用来访问其外部的`class B`的。
+通过[内存布局：虚函数表](data_layout.hmtl)我们了解了`class B`的内存布局如下所示，`sizeof(vptr.B) + sizeof(ib) = 8`，通过上面代码的注释我们就能知道`B::_ZTV1B + 0`处的`8u`是`class B`用来访问其内部的`class A`的，同理我们可知道，`B::_ZTV1B + 24`处的`-0x00000000000000008`是`class A`（特指`class B`内部的`class A`）用来访问其外部的`class B`的。当我们在`class B`里增加一个成员变量`int ib2`后，该偏移将由`8`变成`0xC`。
 
     vptr.B | ib | vptr.A | ia
 
@@ -200,3 +200,8 @@ B::_ZTT1B: 2u entries
 
 ## 4. 小结
 现在，我们终于可以理解[C++ Vtable Example](http://mentorembedded.github.io/cxx-abi/cxx-vtable-ex.html) Table 1c了。
+
+## 推荐阅读
+* [Linux Standard Base C++ Specification](http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-CXX-generic/LSB-CXX-generic/cxxclasses.html)
+
+  它用数据结构的形式展现了`vtable`里有些什么。
