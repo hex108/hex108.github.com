@@ -8,9 +8,9 @@ title: The C++ Programing Language
 
 ### Abstraction Mechanisms
 * [内存布局：虚函数表](data_layout.html)
-* [虚函数表里有些什么](what_is_in_vtable.html)
-* [函数重载与虚函数](overload_vs_virtual_function.html)
+* [虚表里有些什么](what_is_in_vtable.html)
 * [RTTI的细节](rtti.html)
+* [函数重载与虚函数](overload_vs_virtual_function.html)
 
 ### The Standard Library
 * [迭代器的实现细节](iterator.html)

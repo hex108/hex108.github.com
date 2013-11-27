@@ -6,7 +6,7 @@ title: 内存布局：虚函数表
 {{ page.title }}
 ================
 
-关于C++内存布局的ABI可以见[Itanium C++ ABI](http://mentorembedded.github.io/cxx-abi/abi.html)（ABI都是这么枯燥吗？）。内存局的问题挺多的：这篇文章主要想讲清楚两个问题：
+关于C++内存布局的ABI可以见[Itanium C++ ABI](http://mentorembedded.github.io/cxx-abi/abi.html)（ABI都是这么枯燥吗？）。内存布局的问题挺多的：这篇文章主要想讲清楚两个问题：
 
 * 虚函数表(virtual table)怎么存储的
 * 当把子类对象的地址赋值给父类指针时，父类指针指向哪
@@ -167,9 +167,9 @@ class D: public B, public C{
 
 `A *pa = &d;`，`pa`指向的是`vptr.A`。`B *pb = &d;`，`pb`指向的是`vptr.B`。`C *pc = &d;`，`pc`指向的是`vptr.C`。调用`pa->foo()`和`pc->foo()`时需要像本文上面所说的一样对第一个参数`this`指针进行调整，而`pb->foo()`不需要。
 
-但是这个内存布局违反了本文最开始说的"子类和父类内存布局一致"的原则。如何解决这个问题？在虚函数表中将会有一项能帮助`pb->foo()`去找到`vptr.A`的地址。更详细的解释可以见另一篇文章《[虚函数表里有些什么](what_is_in_vtable.html)》，简单的解释如下所示（引自[Itanium C++ ABI](http://mentorembedded.github.io/cxx-abi/abi.html)）：
+但是这个内存布局违反了本文最开始说的"子类和父类内存布局一致"的原则。如何解决这个问题？在虚函数表中将会有一项能帮助`pb->foo()`去找到`vptr.A`的地址。更详细的解释可以见另一篇文章《[虚表里有些什么](what_is_in_vtable.html)》，简单的解释如下所示（引自[Itanium C++ ABI](http://mentorembedded.github.io/cxx-abi/abi.html)）：
 
 > A virtual table consists of a sequence of offsets, data pointers, and function pointers, as well as structures composed of such items. 
 
-## 3. 小结
+## 4. 小结
 辛苦地写了这么久，发现有一个表([C++ Vtable Example](http://mentorembedded.github.io/cxx-abi/cxx-vtable-ex.html) Table 1b)已经很好地总结了我所想表达的，不过它只有结果，看完本文就能较好地理解这个表了。
