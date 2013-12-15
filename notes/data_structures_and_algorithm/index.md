@@ -7,11 +7,15 @@ title: 数据结构与算法
 ================
 
 ## 1. 数据结构
-有的问题数据结构选对了，接下来的就简单了。
+"恰当的数据视图实际上决定了程序的结构"。有的问题数据结构选对了，接下来的就简单了。
 
 * 二叉树
 
   对树的遍历可以有多种实现方式：递归，栈，**Morris遍历**。前两种实现方式比较常见，容易理解，理解Morris遍历的关键在于理解[Threaded Binary Tree](http://en.wikipedia.org/wiki/Threaded_binary_tree)。以中序遍历为例，Morris遍历的代码为[morris_visit](code/morris_visit_tree.txt)。
+
+* 位图
+
+  甚至可以用来排序！
 
 ## 2. 算法
 ### 算法复杂度
@@ -26,3 +30,9 @@ title: 数据结构与算法
 
 ### 技巧
 缓存(在动态规化的备忘录方法中得到了很好的使用）、Hash、二分、剪枝、预处理（如：处理数组前先对它排序）、Dummy Node。
+
+## 3. 真实世界
+* [Core algorithms deployed](http://cstheory.stackexchange.com/questions/19759/core-algorithms-deployed/19773#19773)，译文：[那些算法在哪里？](http://linux.cn/thread/11993/1/1/)
+
+  总结了数据结构和算法在Linux kernel、chrome、编译器等开源软件中的实际使用。
+  
