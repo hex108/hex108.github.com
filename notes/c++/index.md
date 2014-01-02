@@ -6,7 +6,7 @@ title: The C++ Programing Language
 {{ page.title }}
 ================
 ### Basic Facilities
-* [返回引用类型](return_reference_type.html)
+* [返回引用类型的值](return_reference_type.html)
 
 ### Abstraction Mechanisms
 * [内存布局：虚函数表](data_layout.html)
