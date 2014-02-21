@@ -7,7 +7,7 @@ title: 排序算法
 ================
 
 ## 1. 内部排序算法
-Wiki上对[排序算法](http://en.wikipedia.org/wiki/Sorting_algorithm)有一个很好的总结。稳定排序有：冒泡排序、插入排序、归并排序，不稳定排序有：快速排序、堆排序、选择排序。
+Wiki上对[排序算法](http://en.wikipedia.org/wiki/Sorting_algorithm)有一个很好的总结。稳定排序有：冒泡排序、插入排序、归并排序，不稳定排序有：快速排序、堆排序、**选择排序**。
 
 * [快速排序](qsort.html)
 * [冒泡排序](bubble_sort.html)
