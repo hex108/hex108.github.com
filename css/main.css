@@ -98,3 +98,7 @@ ul{list-style:circle;}
 #catalogue .txt_H3{padding-left:12px;}
 #catalogue .txt_H4{padding-left:24px;}
 #catalogue .txt_H5{padding-left:36px;}
+.listing-item,.listing-seperator{list-style-type:none;}
+.listing-item a{padding:.2em 1em;}
+.listing-item time{color:#999999;}
+.listing-seperator{font-weight:bold;}

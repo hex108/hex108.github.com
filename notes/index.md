@@ -12,3 +12,4 @@ title: 笔记
 * Programing Languages
   * [C++](c++)
 * [一些思考](thought)
+* [Ubuntu](ubuntu)
