@@ -80,7 +80,7 @@ ul{list-style:circle;}
 }
 #post h1{padding-bottom:15px;border-bottom:1px dotted #ccc;}
 #post .eof{text-align:center;margin:1em;}
-#post img{border:10px solid #fff;box-shadow:inset 0 0 3px rgba(0,0,0,.8),2px 2px 8px rgba(0,0,0,.9);}
+#post img{border:10px solid #fff;box-shadow:inset 0 0 3px rgba(0,0,0,.8),2px 2px 8px rgba(0,0,0,.9);text-align: center;margin: 0 auto;}
 
 
 #post.fullscreen{margin:0 auto;width:840px;padding-left:30px;padding-right:30px;background-color:#fdfdfd;}
