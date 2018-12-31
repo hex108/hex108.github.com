@@ -4,4 +4,4 @@ _cache/
 .gitignore
 .DS_Store
 *.swp
-
+public
