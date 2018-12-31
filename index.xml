@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hex108</title>
+    <link>http://hex108.github.io/</link>
+    <description>Recent content on hex108</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 02 Jan 2014 20:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://hex108.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>收到GDB assignment了</title>
+      <link>http://hex108.github.io/post/2014-01-02-gdb-assignment/</link>
+      <pubDate>Thu, 02 Jan 2014 20:00:00 +0800</pubDate>
+      
+      <guid>http://hex108.github.io/post/2014-01-02-gdb-assignment/</guid>
+      <description>2013年12月20号收到GDB assignment了。因为个人原因，一点也高兴不起来。</description>
+    </item>
+    
+    <item>
+      <title>GDB符号处理简介</title>
+      <link>http://hex108.github.io/post/2013-10-14-introduction-to-gdb-symbol-handling/</link>
+      <pubDate>Mon, 14 Oct 2013 20:00:00 +0800</pubDate>
+      
+      <guid>http://hex108.github.io/post/2013-10-14-introduction-to-gdb-symbol-handling/</guid>
+      <description>符号处理(Symbol Handling)是GDB的一个重要组成部分，它包括以下几部分：读取目标文件(objfile file readers)，解释调</description>
+    </item>
+    
+    <item>
+      <title>GDB如何获取虚基类中成员变量的偏移</title>
+      <link>http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/</link>
+      <pubDate>Mon, 30 Sep 2013 20:00:00 +0800</pubDate>
+      
+      <guid>http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/</guid>
+      <description>问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体</description>
+    </item>
+    
+  </channel>
+</rss>

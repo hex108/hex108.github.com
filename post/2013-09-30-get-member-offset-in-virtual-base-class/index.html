@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>GDB如何获取虚基类中成员变量的偏移 - hex108</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="hex108" /><meta name="description" content="问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体" /><meta name="keywords" content="program, hack, geek" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="GDB如何获取虚基类中成员变量的偏移" />
+<meta property="og:description" content="问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/" /><meta property="article:published_time" content="2013-09-30T20:00:00&#43;08:00"/>
+<meta property="article:modified_time" content="2013-09-30T20:00:00&#43;08:00"/>
+
+<meta itemprop="name" content="GDB如何获取虚基类中成员变量的偏移">
+<meta itemprop="description" content="问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体">
+
+
+<meta itemprop="datePublished" content="2013-09-30T20:00:00&#43;08:00" />
+<meta itemprop="dateModified" content="2013-09-30T20:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="1072">
+
+
+
+<meta itemprop="keywords" content="C&#43;&#43;,GDB," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GDB如何获取虚基类中成员变量的偏移"/>
+<meta name="twitter:description" content="问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">hex108</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">hex108</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">GDB如何获取虚基类中成员变量的偏移</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2013-09-30 </span>
+        
+          <span class="more-meta"> 约 1072 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#问题">问题</a></li>
+<li><a href="#分析">分析</a>
+<ul>
+<li><a href="#gdb如何存储-class-a-和-class-b">GDB如何存储<code>class A</code>和<code>class B</code></a></li>
+<li><a href="#gdb怎么访问虚基类成员-a">GDB怎么访问虚基类成员<code>a</code></a></li>
+</ul></li>
+<li><a href="#后记">后记</a>
+<ul>
+<li><a href="#能通过别的方式获得-a-在-b-中的偏移吗">能通过别的方式获得<code>A</code>在<code>B</code>中的偏移吗</a></li>
+<li><a href="#通过virtual-table才能得到虚基类的偏移有什么优点">通过virtual table才能得到虚基类的偏移有什么优点</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="问题">问题</h2>
+
+<p>我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体(struct/class)中的偏移，这个API在一般的情况下能正常工作，不过遇到虚基类(virtual base class)就有问题了。</p>
+
+<p>把问题进行简化，可以得到如下测试例子：</p>
+
+<p>{% highlight c++ %}
+// test.cpp
+class A{
+public:
+​    int a;
+};</p>
+
+<p>class B: public virtual A{
+public:
+​    int b;
+};</p>
+
+<p>int main(){
+​    B t;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">return 0;</pre></td></tr></table>
+</div>
+</div>
+<p>}
+{% endhighlight %}</p>
+
+<p>{% highlight c++ %}
+$ gdb ./test
+(gdb)p &amp;(((B * )0)-&gt;a)
+Cannot access memory at address 0x0
+{% endhighlight %}</p>
+
+<h2 id="分析">分析</h2>
+
+<h3 id="gdb如何存储-class-a-和-class-b">GDB如何存储<code>class A</code>和<code>class B</code></h3>
+
+<p>通过<code>readelf -wi test</code>可以查看DWARF文件(用-g选项编译出的test文件)是如何存储<code>A</code>和<code>B</code>的，GDB只是把它们读出来并进行了一些处理，基本的关系不会变。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">B ----- b (int, offset: 4)              &lt;---  B&#39;s own members
+    |
+    --- A (public, virutal, offset: ?)  &lt;---  B&#39;s base classes
+
+A ----- a (int, offset: 0)</pre></td></tr></table>
+</div>
+</div>
+<h3 id="gdb怎么访问虚基类成员-a">GDB怎么访问虚基类成员<code>a</code></h3>
+
+<p><code>p &amp;(((B *)0)-&gt;a)</code>在GDB中经历了如下几步：</p>
+
+<p>1.查找自己的成员变量</p>
+
+<p>查找<code>class B</code>自己的成员变量中是否有<code>a</code>，没找到则会依次查找其基类。</p>
+
+<p>2.查找基类</p>
+
+<p><code>B</code>的基类只有<code>A</code>，因此查找<code>A</code>。通过获取<code>a</code>在<code>A</code>中偏移，再加上<code>A</code>在<code>B</code>中的偏移，即是<code>a</code>在<code>B</code>中的偏移。<code>A</code>是<code>B</code>的虚基类, 要通过<code>B</code>中的virtual table才能获得<code>A</code>在<code>B</code>中的偏移(这是<a href="http://mentorembedded.github.io/cxx-abi/abi.html#vtable">C++ ABI</a>规定的)。
+&gt; Virtual Base (vbase) offsets are used to access the virtual bases of an object. Such an entry is added to the derived class object address (i.e. the address of its virtual table pointer) to get the address of a virtual base class subobject.</p>
+
+<p>此时，通过地址0去访问virtual table，则会出错。如果这个地址是合法的，就能正常 访问，比如:</p>
+
+<p>{% highlight c++ %}
+(gdb) p &amp;(((B *)&amp;t)-&gt;a)
+$1 = (int *) 0xbffff2fc
+(gdb) p (char *)&amp;(((B *)&amp;t)-&gt;a) - (char *)&amp;t  // 获得a在B中的偏移
+$2 = 8
+{% endhighlight %}</p>
+
+<h2 id="后记">后记</h2>
+
+<h3 id="能通过别的方式获得-a-在-b-中的偏移吗">能通过别的方式获得<code>A</code>在<code>B</code>中的偏移吗</h3>
+
+<p>我觉得是可以的，可以见GDB mailist上的<a href="https://sourceware.org/ml/gdb/2013-09/msg00030.html">讨论</a>。编译器在编译时已经确定了<code>A</code>在<code>B</code>中的偏移，但是它并没有将该偏移写入test文件中（该偏移值在<code>B</code>的复制构造函数中可以看到)，因此GDB也无能为力了。当然，这个偏移值不是必须的，通过virtual table就可以得到，也不是ABI要求的。对于多态,这个偏移值也是没有意义的, 例如: 如果定义<code>class C: public B: public virtual A{}</code>，申明<code>C t2</code>, <code>&amp;(((B *)&amp;t2)-&gt;a)</code>的偏移和上述<code>A</code>在<code>B</code>的偏移是没有必然关系的。</p>
+
+<h3 id="通过virtual-table才能得到虚基类的偏移有什么优点">通过virtual table才能得到虚基类的偏移有什么优点</h3>
+
+<ul>
+<li><p>如果没有多态, 直接通过偏移值访问就可以了，而且更高效。</p></li>
+
+<li><p>有多态时, 编译器只能通过virtual table去得到偏移。例如：
+{% highlight c++ %}
+B t;
+C t2;
+t.a = 3;
+t2.a = 4;
+B *p1 = &t;
+B *p2 = (B *)&t2;
+cout &lt;&lt; p1-&gt;a &lt;&lt; endl;
+cout &lt;&lt; p2-&gt;a &lt;&lt; endl;
+{% endhighlight %}</p></li>
+</ul>
+
+<p>编译器生成二进制代码时只能通过virtual table去获取a在p1和p2中的偏移。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">hex108</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2013-09-30</span>
+  </p>
+  
+  
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+          <a href="/tags/gdb/">GDB</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2013-10-14-introduction-to-gdb-symbol-handling/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">GDB符号处理简介</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'hex108';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/hex108" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.douban.com/people/heixia108/" class="iconfont icon-douban" title="douban"></a>
+  <a href="http://hex108.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2013 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hex108</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
