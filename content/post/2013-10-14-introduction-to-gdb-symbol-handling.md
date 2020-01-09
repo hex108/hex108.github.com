@@ -8,14 +8,13 @@ tags: [GDB]
 
 符号处理(Symbol Handling)是GDB的一个重要组成部分，它包括以下几部分：读取目标文件(objfile file readers)，解释调试信息(debug info interpreters)，管理符号表(symbol table management)，解析源语言的表达式(source language expression parsing)，打印类型和值(type and value printing)。以下面的例子简要说明GDB怎么处理符号的。
 
-{% highlight c %}
+```
 // test.c
 int mini = 3;
-
 void foo(void){
-​    int mini_in_foo = 5;  // 可以把它和mini的DIE结构进行对比
+    int mini_in_foo = 5;  // 可以把它和mini的DIE结构进行对比
 }
-{% endhighlight %}
+```
 
     $ gcc -fPIC -g -c -o test.o test.c
     $ gdb ./test.o

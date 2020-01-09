@@ -1,7 +1,7 @@
 ---
 title: "收到GDB assignment了"
 date: 2014-01-02T20:00:00+08:00
-draft: false
+draft: true
 category: GDB
 tags: [GDB]
 ---

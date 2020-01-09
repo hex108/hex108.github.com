@@ -11,30 +11,28 @@ tags: [C++, GDB]
 
 把问题进行简化，可以得到如下测试例子：
 
-{% highlight c++ %}
+```
 // test.cpp
 class A{
 public:
-​    int a;
+    int a;
 };
-
 class B: public virtual A{
 public:
-​    int b;
+    int b;
 };
 
 int main(){
-​    B t;
-
+    B t;
     return 0;
 }
-{% endhighlight %}
+```
 
-{% highlight c++ %}
+```
 $ gdb ./test
 (gdb)p &(((B * )0)->a)
 Cannot access memory at address 0x0
-{% endhighlight %}
+```
 
 ## 分析
 ### GDB如何存储`class A`和`class B`
@@ -60,13 +58,12 @@ Cannot access memory at address 0x0
 
 此时，通过地址0去访问virtual table，则会出错。如果这个地址是合法的，就能正常 访问，比如:
 
-
-{% highlight c++ %}
+```
 (gdb) p &(((B *)&t)->a)
 $1 = (int *) 0xbffff2fc
 (gdb) p (char *)&(((B *)&t)->a) - (char *)&t  // 获得a在B中的偏移
 $2 = 8
-{% endhighlight %}
+```
 
 ## 后记
 ### 能通过别的方式获得`A`在`B`中的偏移吗
@@ -76,7 +73,7 @@ $2 = 8
 * 如果没有多态, 直接通过偏移值访问就可以了，而且更高效。
 
 * 有多态时, 编译器只能通过virtual table去得到偏移。例如：
-{% highlight c++ %}
+```
 B t;
 C t2;
 t.a = 3;
@@ -85,6 +82,6 @@ B *p1 = &t;
 B *p2 = (B *)&t2;
 cout << p1->a << endl;
 cout << p2->a << endl;
-{% endhighlight %}
+```
 
 编译器生成二进制代码时只能通过virtual table去获取a在p1和p2中的偏移。
