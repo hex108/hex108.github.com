@@ -6,19 +6,10 @@
     <description>Recent content on hex108</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 02 Jan 2014 20:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2013 20:00:00 +0800</lastBuildDate>
     
 	<atom:link href="http://hex108.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>收到GDB assignment了</title>
-      <link>http://hex108.github.io/post/2014-01-02-gdb-assignment/</link>
-      <pubDate>Thu, 02 Jan 2014 20:00:00 +0800</pubDate>
-      
-      <guid>http://hex108.github.io/post/2014-01-02-gdb-assignment/</guid>
-      <description>2013年12月20号收到GDB assignment了。因为个人原因，一点也高兴不起来。</description>
-    </item>
     
     <item>
       <title>GDB符号处理简介</title>

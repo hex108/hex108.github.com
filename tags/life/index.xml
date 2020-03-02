@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life on hex108</title>
+    <link>http://localhost:1313/tags/life/</link>
+    <description>Recent content in Life on hex108</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 10 Jan 2014 20:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/tags/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>信息是重要的</title>
+      <link>http://localhost:1313/post/2014-01-10-information-is-important/</link>
+      <pubDate>Fri, 10 Jan 2014 20:00:00 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/2014-01-10-information-is-important/</guid>
+      <description>在信息时代，掌握有效的信息是比较重要的。生活发生着改变，我们也需要做出相应地改变，及时地更新自己掌握的信息。 信息传播的三个阶段 1. 信息只被少部</description>
+    </item>
+    
+  </channel>
+</rss>

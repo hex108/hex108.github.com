@@ -6,10 +6,19 @@
     <description>Recent content in Tags on hex108</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 30 Sep 2013 20:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Oct 2013 20:00:00 +0800</lastBuildDate>
     
 	<atom:link href="http://hex108.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GDB</title>
+      <link>http://hex108.github.io/tags/gdb/</link>
+      <pubDate>Mon, 14 Oct 2013 20:00:00 +0800</pubDate>
+      
+      <guid>http://hex108.github.io/tags/gdb/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>C&#43;&#43;</title>
@@ -17,15 +26,6 @@
       <pubDate>Mon, 30 Sep 2013 20:00:00 +0800</pubDate>
       
       <guid>http://hex108.github.io/tags/c&#43;&#43;/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GDB</title>
-      <link>http://hex108.github.io/tags/gdb/</link>
-      <pubDate>Thu, 02 Jan 2014 20:00:00 +0800</pubDate>
-      
-      <guid>http://hex108.github.io/tags/gdb/</guid>
       <description></description>
     </item>
     

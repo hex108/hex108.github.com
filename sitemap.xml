@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="http://hex108.github.io/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://hex108.github.io/post/2014-01-02-gdb-assignment/</loc>
-    <lastmod>2014-01-02T20:00:00+08:00</lastmod>
+    <loc>http://hex108.github.io/tags/gdb/</loc>
+    <lastmod>2013-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -17,8 +16,22 @@
   </url>
   
   <url>
-    <loc>http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/</loc>
-    <lastmod>2013-09-30T20:00:00+08:00</lastmod>
+    <loc>http://hex108.github.io/</loc>
+    <lastmod>2013-10-14T20:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://hex108.github.io/post/</loc>
+    <lastmod>2013-10-14T20:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://hex108.github.io/tags/</loc>
+    <lastmod>2013-10-14T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -27,41 +40,20 @@
     <loc>http://hex108.github.io/tags/c&#43;&#43;/</loc>
     <lastmod>2013-09-30T20:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/</loc>
+    <lastmod>2013-09-30T20:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://hex108.github.io/categories/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://hex108.github.io/tags/gdb/</loc>
-    <lastmod>2014-01-02T20:00:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://hex108.github.io/post/</loc>
-    <lastmod>2014-01-02T20:00:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://hex108.github.io/tags/</loc>
-    <lastmod>2013-09-30T20:00:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://hex108.github.io/</loc>
-    <lastmod>2014-01-02T20:00:00+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
 </urlset>

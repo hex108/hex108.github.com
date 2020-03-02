@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
 
 
 <link rel="canonical" href="http://hex108.github.io/post/2013-10-14-introduction-to-gdb-symbol-handling/" />
@@ -41,16 +41,16 @@
 <meta property="og:title" content="GDB符号处理简介" />
 <meta property="og:description" content="符号处理(Symbol Handling)是GDB的一个重要组成部分，它包括以下几部分：读取目标文件(objfile file readers)，解释调" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://hex108.github.io/post/2013-10-14-introduction-to-gdb-symbol-handling/" /><meta property="article:published_time" content="2013-10-14T20:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2013-10-14T20:00:00&#43;08:00"/>
-
+<meta property="og:url" content="http://hex108.github.io/post/2013-10-14-introduction-to-gdb-symbol-handling/" />
+<meta property="article:published_time" content="2013-10-14T20:00:00+08:00" />
+<meta property="article:modified_time" content="2013-10-14T20:00:00+08:00" />
 <meta itemprop="name" content="GDB符号处理简介">
 <meta itemprop="description" content="符号处理(Symbol Handling)是GDB的一个重要组成部分，它包括以下几部分：读取目标文件(objfile file readers)，解释调">
 
 
 <meta itemprop="datePublished" content="2013-10-14T20:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2013-10-14T20:00:00&#43;08:00" />
-<meta itemprop="wordCount" content="1367">
+<meta itemprop="wordCount" content="1364">
 
 
 
@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2013-10-14 </span>
         
-          <span class="more-meta"> 约 1367 字 </span>
+          <span class="more-meta"> 约 1364 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
@@ -154,16 +154,22 @@
       
 
 <p>符号处理(Symbol Handling)是GDB的一个重要组成部分，它包括以下几部分：读取目标文件(objfile file readers)，解释调试信息(debug info interpreters)，管理符号表(symbol table management)，解析源语言的表达式(source language expression parsing)，打印类型和值(type and value printing)。以下面的例子简要说明GDB怎么处理符号的。</p>
-
-<p>{% highlight c %}
-// test.c
-int mini = 3;</p>
-
-<p>void foo(void){
-​    int mini_in_foo = 5;  // 可以把它和mini的DIE结构进行对比
-}
-{% endhighlight %}</p>
 <div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">// test.c
+int mini = 3;
+void foo(void){
+    int mini_in_foo = 5;  // 可以把它和mini的DIE结构进行对比
+}</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt">1
 </span><span class="lnt">2
@@ -278,20 +284,20 @@ Reading symbols from /home/hex108/test.o...done.
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
-    <span class="item-content">2013-10-14</span>
+    <span class="item-content">
+        2013-10-14
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/gdb/">GDB</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/2014-01-02-gdb-assignment/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">收到GDB assignment了</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
+        
         <a class="next" href="/post/2013-09-30-get-member-offset-in-virtual-base-class/">
             <span class="next-text nav-default">GDB如何获取虚基类中成员变量的偏移</span>
             <span class="next-text nav-mobile">下一篇</span>
@@ -315,6 +321,10 @@ Reading symbols from /home/hex108/test.o...done.
     })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
 
       </div>
     </main>
@@ -341,7 +351,7 @@ Reading symbols from /home/hex108/test.o...done.
   <span class="copyright-year">
     &copy; 
     2013 - 
-    2018
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

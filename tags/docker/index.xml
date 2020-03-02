@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on hex108</title>
+    <link>http://localhost:1313/tags/docker/</link>
+    <description>Recent content in Docker on hex108</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 10 Jan 2014 20:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://localhost:1313/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker registry工作机制</title>
+      <link>http://localhost:1313/post/2014-11-18-how-docker-registry-works/</link>
+      <pubDate>Fri, 10 Jan 2014 20:00:00 +0800</pubDate>
+      
+      <guid>http://localhost:1313/post/2014-11-18-how-docker-registry-works/</guid>
+      <description>Docker registry在Docker中的位置如下图所示，运行docker push、docker pull、docker search时，实际上是通过</description>
+    </item>
+    
+  </channel>
+</rss>

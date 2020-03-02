@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.58.3 with theme even" />
 
 
 <link rel="canonical" href="http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/" />
@@ -41,16 +41,16 @@
 <meta property="og:title" content="GDB如何获取虚基类中成员变量的偏移" />
 <meta property="og:description" content="问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/" /><meta property="article:published_time" content="2013-09-30T20:00:00&#43;08:00"/>
-<meta property="article:modified_time" content="2013-09-30T20:00:00&#43;08:00"/>
-
+<meta property="og:url" content="http://hex108.github.io/post/2013-09-30-get-member-offset-in-virtual-base-class/" />
+<meta property="article:published_time" content="2013-09-30T20:00:00+08:00" />
+<meta property="article:modified_time" content="2013-09-30T20:00:00+08:00" />
 <meta itemprop="name" content="GDB如何获取虚基类中成员变量的偏移">
 <meta itemprop="description" content="问题 我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体">
 
 
 <meta itemprop="datePublished" content="2013-09-30T20:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2013-09-30T20:00:00&#43;08:00" />
-<meta itemprop="wordCount" content="1072">
+<meta itemprop="wordCount" content="1069">
 
 
 
@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2013-09-30 </span>
         
-          <span class="more-meta"> 约 1072 字 </span>
+          <span class="more-meta"> 约 1069 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         
       </div>
@@ -162,38 +162,51 @@
 <p>我们希望在系统运行时运行一些基于GDB的Debug Extention，以便获取系统运行时的一些信息。其中一个API是获取成员变量在结构体(struct/class)中的偏移，这个API在一般的情况下能正常工作，不过遇到虚基类(virtual base class)就有问题了。</p>
 
 <p>把问题进行简化，可以得到如下测试例子：</p>
-
-<p>{% highlight c++ %}
-// test.cpp
-class A{
-public:
-​    int a;
-};</p>
-
-<p>class B: public virtual A{
-public:
-​    int b;
-};</p>
-
-<p>int main(){
-​    B t;</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">return 0;</pre></td></tr></table>
-</div>
-</div>
-<p>}
-{% endhighlight %}</p>
+<pre class="chroma">// test.cpp
+class A{
+public:
+    int a;
+};
+class B: public virtual A{
+public:
+    int b;
+};
 
-<p>{% highlight c++ %}
-$ gdb ./test
+int main(){
+    B t;
+    return 0;
+}</pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">$ gdb ./test
 (gdb)p &amp;(((B * )0)-&gt;a)
-Cannot access memory at address 0x0
-{% endhighlight %}</p>
-
+Cannot access memory at address 0x0</pre></td></tr></table>
+</div>
+</div>
 <h2 id="分析">分析</h2>
 
 <h3 id="gdb如何存储-class-a-和-class-b">GDB如何存储<code>class A</code>和<code>class B</code></h3>
@@ -229,14 +242,20 @@ A ----- a (int, offset: 0)</pre></td></tr></table>
 &gt; Virtual Base (vbase) offsets are used to access the virtual bases of an object. Such an entry is added to the derived class object address (i.e. the address of its virtual table pointer) to get the address of a virtual base class subobject.</p>
 
 <p>此时，通过地址0去访问virtual table，则会出错。如果这个地址是合法的，就能正常 访问，比如:</p>
-
-<p>{% highlight c++ %}
-(gdb) p &amp;(((B *)&amp;t)-&gt;a)
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">(gdb) p &amp;(((B *)&amp;t)-&gt;a)
 $1 = (int *) 0xbffff2fc
 (gdb) p (char *)&amp;(((B *)&amp;t)-&gt;a) - (char *)&amp;t  // 获得a在B中的偏移
-$2 = 8
-{% endhighlight %}</p>
-
+$2 = 8</pre></td></tr></table>
+</div>
+</div>
 <h2 id="后记">后记</h2>
 
 <h3 id="能通过别的方式获得-a-在-b-中的偏移吗">能通过别的方式获得<code>A</code>在<code>B</code>中的偏移吗</h3>
@@ -248,17 +267,29 @@ $2 = 8
 <ul>
 <li><p>如果没有多态, 直接通过偏移值访问就可以了，而且更高效。</p></li>
 
-<li><p>有多态时, 编译器只能通过virtual table去得到偏移。例如：
-{% highlight c++ %}
-B t;
+<li><p>有多态时, 编译器只能通过virtual table去得到偏移。例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">B t;
 C t2;
 t.a = 3;
 t2.a = 4;
-B *p1 = &t;
-B *p2 = (B *)&t2;
+B *p1 = &amp;t;
+B *p2 = (B *)&amp;t2;
 cout &lt;&lt; p1-&gt;a &lt;&lt; endl;
-cout &lt;&lt; p2-&gt;a &lt;&lt; endl;
-{% endhighlight %}</p></li>
+cout &lt;&lt; p2-&gt;a &lt;&lt; endl;</pre></td></tr></table>
+</div>
+</div></li>
 </ul>
 
 <p>编译器生成二进制代码时只能通过virtual table去获取a在p1和p2中的偏移。</p>
@@ -272,11 +303,15 @@ cout &lt;&lt; p2-&gt;a &lt;&lt; endl;
   </p>
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
-    <span class="item-content">2013-09-30</span>
+    <span class="item-content">
+        2013-09-30
+        
+    </span>
   </p>
   
   
-</div><footer class="post-footer">
+</div>
+<footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
           <a href="/tags/gdb/">GDB</a>
@@ -307,6 +342,10 @@ cout &lt;&lt; p2-&gt;a &lt;&lt; endl;
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
+  
+
+  
+
       </div>
     </main>
 
@@ -332,7 +371,7 @@ cout &lt;&lt; p2-&gt;a &lt;&lt; endl;
   <span class="copyright-year">
     &copy; 
     2013 - 
-    2018
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
