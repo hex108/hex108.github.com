@@ -2,7 +2,7 @@
 title: "GDB如何获取虚基类中成员变量的偏移"
 date: 2013-09-30T20:00:00+08:00
 draft: false
-category: GDB 
+categories: [GDB]
 tags: [C++, GDB]
 ---
 
